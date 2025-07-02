@@ -20,11 +20,12 @@ public class CreateDrugResponseDto {
     private String expirationDate;
     private String storageConditions;
     private int availableCopies;
+    private String graphicLink; // New field for graphic link
 
     public CreateDrugResponseDto() {
     }
 
-    public CreateDrugResponseDto(long id, String ma, Double Price, String brandName, String manufacturer, String activeIngredient, String ndc, String atcCode, String drugForm, String routeOfAdministration, String prescriptionStatus, String controlledSubstanceStatus, String contraindications, String sideEffects, String dosage, String batchNumber, String expirationDate, String storageConditions, int availableCopies) {
+    public CreateDrugResponseDto(long id, String ma, Double Price, String brandName, String manufacturer, String activeIngredient, String ndc, String atcCode, String drugForm, String routeOfAdministration, String prescriptionStatus, String controlledSubstanceStatus, String contraindications, String sideEffects, String dosage, String batchNumber, String expirationDate, String storageConditions, int availableCopies, String graphicLink) {
         this.id = id;
         this.ma = ma;
         this.price = Price;
@@ -44,6 +45,7 @@ public class CreateDrugResponseDto {
         this.expirationDate = expirationDate;
         this.storageConditions = storageConditions;
         this.availableCopies = availableCopies;
+        this.graphicLink = graphicLink;
     }
 
     public long getId() {
@@ -195,5 +197,13 @@ public class CreateDrugResponseDto {
 
     public void setAvailableCopies(int availableCopies) {
         this.availableCopies = availableCopies;
+    }
+
+    public String getGraphicLink() {
+        return graphicLink;
+    }
+
+    public void setGraphicLink(String graphicLink) {
+        this.graphicLink = graphicLink;
     }
 }

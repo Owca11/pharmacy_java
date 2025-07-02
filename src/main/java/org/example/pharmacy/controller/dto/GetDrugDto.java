@@ -20,11 +20,12 @@ public class GetDrugDto {
     private String expirationDate;
     private String storageConditions;
     private boolean isAvailable;
+    private String graphicLink; // New field for graphic link
 
     public GetDrugDto() {
     }
 
-    public GetDrugDto(long id, String ma, Double price, String brandName, String manufacturer, String activeIngredient, String ndc, String atcCode, String drugForm, String routeOfAdministration, String prescriptionStatus, String controlledSubstanceStatus, String contraindications, String sideEffects, String dosage, String batchNumber, String expirationDate, String storageConditions, boolean isAvailable) {
+    public GetDrugDto(long id, String ma, Double price, String brandName, String manufacturer, String activeIngredient, String ndc, String atcCode, String drugForm, String routeOfAdministration, String prescriptionStatus, String controlledSubstanceStatus, String contraindications, String sideEffects, String dosage, String batchNumber, String expirationDate, String storageConditions, boolean isAvailable, String graphicLink) {
         this.id = id;
         this.ma = ma;
         this.price = price;
@@ -44,6 +45,7 @@ public class GetDrugDto {
         this.expirationDate = expirationDate;
         this.storageConditions = storageConditions;
         this.isAvailable = isAvailable;
+        this.graphicLink = graphicLink;
     }
 
     public long getId() {
@@ -196,5 +198,13 @@ public class GetDrugDto {
 
     public void setAvailable(boolean available) {
         isAvailable = available;
+    }
+
+    public String getGraphicLink() {
+        return graphicLink;
+    }
+
+    public void setGraphicLink(String graphicLink) {
+        this.graphicLink = graphicLink;
     }
 }

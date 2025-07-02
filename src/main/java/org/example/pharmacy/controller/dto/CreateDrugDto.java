@@ -63,7 +63,7 @@ public class CreateDrugDto {
     private String batchNumber;
 
     @NotBlank(message = "Expiration date cannot be blank")
-    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "Expiration date must follow the format yyyy-MM-dd")
+    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "Expiration date must follow the format YYYY-MM-dd")
 //    @Future(message = "The expiration date has passed, you cannot add this drug")
     private String expirationDate;
 
@@ -73,10 +73,17 @@ public class CreateDrugDto {
     @Min(value = 1, message = "Available copies must be a positive integer")
     private int availableCopies;
 
+    @Pattern(
+            regexp = "^(http|https)://.*\\.(jpeg|jpg|gif|png|bmp|svg)(\\?.*)?$",
+            message = "Graphic link must be a valid image URL"
+    )
+    @Size(max = 1000, message = "Graphic link cannot exceed 1000 characters")
+    private String graphicLink;
+
     public CreateDrugDto() {
     }
 
-    public CreateDrugDto(String ma, String brandName, Double price, String manufacturer, String activeIngredient, String ndc, String atcCode, String drugForm, String routeOfAdministration, String prescriptionStatus, String controlledSubstanceStatus, String contraindications, String sideEffects, String dosage, String batchNumber, String expirationDate, String storageConditions, int availableCopies) {
+    public CreateDrugDto(String ma, String brandName, Double price, String manufacturer, String activeIngredient, String ndc, String atcCode, String drugForm, String routeOfAdministration, String prescriptionStatus, String controlledSubstanceStatus, String contraindications, String sideEffects, String dosage, String batchNumber, String expirationDate, String storageConditions, int availableCopies, String graphicLink) {
         this.ma = ma;
         this.price = price;
         this.brandName = brandName;
@@ -95,6 +102,7 @@ public class CreateDrugDto {
         this.expirationDate = expirationDate;
         this.storageConditions = storageConditions;
         this.availableCopies = availableCopies;
+        this.graphicLink = graphicLink;
     }
 
     public String getMa() {
@@ -239,5 +247,13 @@ public class CreateDrugDto {
 
     public void setAvailableCopies(int availableCopies) {
         this.availableCopies = availableCopies;
+    }
+
+    public String getGraphicLink() {
+        return graphicLink;
+    }
+
+    public void setGraphicLink(String graphicLink) {
+        this.graphicLink = graphicLink;
     }
 }

@@ -82,6 +82,10 @@ public class DrugEntity {
     @Column(name = "availableCopies")
     private int availableCopies;
 
+    @Basic
+    @Column(name = "graphicLink") // New field for graphic link
+    private String graphicLink;
+
 
     public long getId() {
         return id;
@@ -232,5 +236,13 @@ public class DrugEntity {
 
     public void setAvailableCopies(int availableCopies) {
         this.availableCopies = availableCopies;
+    }
+
+    public String getGraphicLink() { // Getter for graphicLink
+        return graphicLink;
+    }
+
+    public void setGraphicLink(String graphicLink) { // Setter for graphicLink
+        this.graphicLink = graphicLink;
     }
 }

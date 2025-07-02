@@ -25,14 +25,14 @@ public class DrugService {
         var drugs = drugRepository.findAll();
 
         return drugs.stream()
-                .map((drug) -> new GetDrugDto(drug.getId(), drug.getMa(), drug.getPrice(), drug.getBrandName(), drug.getManufacturer(), drug.getActiveIngredient(), drug.getNdc(), drug.getAtcCode(), drug.getDrugForm(), drug.getRouteOfAdministration(), drug.getPrescriptionStatus(), drug.getControlledSubstanceStatus(), drug.getContraindications(), drug.getSideEffects(), drug.getDosage(), drug.getBatchNumber(), drug.getExpirationDate(), drug.getStorageConditions(), drug.getAvailableCopies() > 0))
+                .map((drug) -> new GetDrugDto(drug.getId(), drug.getMa(), drug.getPrice(), drug.getBrandName(), drug.getManufacturer(), drug.getActiveIngredient(), drug.getNdc(), drug.getAtcCode(), drug.getDrugForm(), drug.getRouteOfAdministration(), drug.getPrescriptionStatus(), drug.getControlledSubstanceStatus(), drug.getContraindications(), drug.getSideEffects(), drug.getDosage(), drug.getBatchNumber(), drug.getExpirationDate(), drug.getStorageConditions(), drug.getAvailableCopies() > 0, drug.getGraphicLink()))
                 .toList();
     }
 
     public GetDrugDto getById(long id){
 
         var drugEntity = drugRepository.findById(id).orElseThrow(() -> new DrugNotFoundError(id));
-        return new GetDrugDto(drugEntity.getId(), drugEntity.getMa(), drugEntity.getPrice(), drugEntity.getBrandName(), drugEntity.getManufacturer(), drugEntity.getActiveIngredient(), drugEntity.getNdc(), drugEntity.getAtcCode(), drugEntity.getDrugForm(), drugEntity.getRouteOfAdministration(), drugEntity.getPrescriptionStatus(), drugEntity.getControlledSubstanceStatus(), drugEntity.getContraindications(), drugEntity.getSideEffects(), drugEntity.getDosage(), drugEntity.getBatchNumber(), drugEntity.getExpirationDate(), drugEntity.getStorageConditions(), drugEntity.getAvailableCopies() > 0);
+        return new GetDrugDto(drugEntity.getId(), drugEntity.getMa(), drugEntity.getPrice(), drugEntity.getBrandName(), drugEntity.getManufacturer(), drugEntity.getActiveIngredient(), drugEntity.getNdc(), drugEntity.getAtcCode(), drugEntity.getDrugForm(), drugEntity.getRouteOfAdministration(), drugEntity.getPrescriptionStatus(), drugEntity.getControlledSubstanceStatus(), drugEntity.getContraindications(), drugEntity.getSideEffects(), drugEntity.getDosage(), drugEntity.getBatchNumber(), drugEntity.getExpirationDate(), drugEntity.getStorageConditions(), drugEntity.getAvailableCopies() > 0, drugEntity.getGraphicLink());
     }
 
     public CreateDrugResponseDto create(CreateDrugDto drug){
@@ -60,10 +60,11 @@ public class DrugService {
         drugEntity.setExpirationDate(drug.getExpirationDate());
         drugEntity.setStorageConditions(drug.getStorageConditions());
         drugEntity.setAvailableCopies(drug.getAvailableCopies());
+        drugEntity.setGraphicLink(drug.getGraphicLink()); // Set graphic link
 
         var newDrug = drugRepository.save(drugEntity);
 
-        return new CreateDrugResponseDto(newDrug.getId(), newDrug.getMa(), newDrug.getPrice(), newDrug.getBrandName(), newDrug.getManufacturer(), newDrug.getActiveIngredient(), newDrug.getNdc(), newDrug.getAtcCode(), newDrug.getDrugForm(), newDrug.getRouteOfAdministration(), newDrug.getPrescriptionStatus(), newDrug.getControlledSubstanceStatus(), newDrug.getContraindications(), newDrug.getSideEffects(), newDrug.getDosage(), newDrug.getBatchNumber(), newDrug.getExpirationDate(), newDrug.getStorageConditions(), newDrug.getAvailableCopies());
+        return new CreateDrugResponseDto(newDrug.getId(), newDrug.getMa(), newDrug.getPrice(), newDrug.getBrandName(), newDrug.getManufacturer(), newDrug.getActiveIngredient(), newDrug.getNdc(), newDrug.getAtcCode(), newDrug.getDrugForm(), newDrug.getRouteOfAdministration(), newDrug.getPrescriptionStatus(), newDrug.getControlledSubstanceStatus(), newDrug.getContraindications(), newDrug.getSideEffects(), newDrug.getDosage(), newDrug.getBatchNumber(), newDrug.getExpirationDate(), newDrug.getStorageConditions(), newDrug.getAvailableCopies(), newDrug.getGraphicLink());
     }
 
     public void delete(long id){
@@ -72,6 +73,4 @@ public class DrugService {
         }
         drugRepository.deleteById(id);
     }
-
-
 }
