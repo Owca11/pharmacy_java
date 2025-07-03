@@ -14,33 +14,50 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Security configuration for the pharmacy application.
+ */
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfiguration {
     private final JwtAuthFilter jwtAuthFilter;
 
+    /**
+     * Constructs a SecurityConfiguration with the given JwtAuthFilter.
+     * @param jwtAuthFilter The JWT authentication filter.
+     */
     @Autowired
     public SecurityConfiguration(JwtAuthFilter jwtAuthFilter) {
         this.jwtAuthFilter = jwtAuthFilter;
     }
 
+    /**
+     * Configures the security filter chain.
+     * @param http The HttpSecurity object to configure.
+     * @return The configured SecurityFilterChain.
+     * @throws Exception if an error occurs during configuration.
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/auth/**").permitAll() // Allow unauthenticated access to authentication endpoints
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // IMPORTANT: Allow all OPTIONS requests for CORS preflight
-                        .requestMatchers(HttpMethod.GET, "/api/drugs/{id}").permitAll() // Allow unauthenticated GET requests to specific drug details
-                        .requestMatchers(HttpMethod.GET, "/api/drugs").permitAll() // NEW: Allow unauthenticated GET requests to fetch all drugs
-                        .anyRequest().authenticated() // All other requests require authentication
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/drugs/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/drugs").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
+    /**
+     * Provides a BCryptPasswordEncoder bean for password encoding.
+     * @return The PasswordEncoder instance.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
